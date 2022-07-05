@@ -13,5 +13,14 @@ RUN pip install pipenv
 COPY Pipfile Pipfile.lock /app/
 RUN pipenv install --system
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' entrypoint.sh
+RUN chmod +x entrypoint.sh
+
 # copy project
 COPY . /app/
+
+
+# run entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
